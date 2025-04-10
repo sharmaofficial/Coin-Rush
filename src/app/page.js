@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
   const [coins, setCoins] = useState(0);
@@ -53,31 +54,31 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [gameStarted, gameOver]);
 
-  useEffect(() => {
-    if (!gameStarted || gameOver) return;
+  // useEffect(() => {
+  //   if (!gameStarted || gameOver) return;
 
-    const spawner = setInterval(() => {
-      const newCoin = {
-        id: uuidv4(),
-        left: Math.random() * 90,
-        duration: getFallDuration(),
-      };
-      setCoins((prev) => [...prev, newCoin]);
-    }, getSpawnInterval());
+  //   const spawner = setInterval(() => {
+  //     const newCoin = {
+  //       id: uuidv4(),
+  //       left: Math.random() * 90,
+  //       duration: getFallDuration(),
+  //     };
+  //     setCoins((prev) => [...prev, newCoin]);
+  //   }, []);
 
-    return () => clearInterval(spawner);
-  }, [gameStarted, gameOver, density]);
+  //   return () => clearInterval(spawner);
+  // }, [gameStarted, gameOver, density]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const newCoin = {
-        id: Date.now(),
+        id: uuidv4(),
         left: Math.random() * 90 + '%',
         duration: getFallDuration(),
         missed: false 
       };
       setFallingCoins((prev) => [...prev, newCoin]);
-    }, 800);
+    }, getSpawnInterval());
     return () => clearInterval(interval);
   }, []);
 
