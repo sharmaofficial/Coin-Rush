@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
   const [coins, setCoins] = useState(0);
@@ -64,7 +63,7 @@ export default function Home() {
   //       duration: getFallDuration(),
   //     };
   //     setCoins((prev) => [...prev, newCoin]);
-  //   }, []);
+  //   }, getSpawnInterval());
 
   //   return () => clearInterval(spawner);
   // }, [gameStarted, gameOver, density]);
@@ -72,13 +71,13 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       const newCoin = {
-        id: uuidv4(),
+        id: Date.now(),
         left: Math.random() * 90 + '%',
         duration: getFallDuration(),
         missed: false 
       };
       setFallingCoins((prev) => [...prev, newCoin]);
-    }, getSpawnInterval());
+    }, 800);
     return () => clearInterval(interval);
   }, []);
 
