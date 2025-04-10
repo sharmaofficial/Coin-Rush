@@ -16,9 +16,12 @@ export default function Home() {
   const [speed, setSpeed] = useState('medium');
   const [density, setDensity] = useState('medium');
 
-  const bgMusic = new Audio('/sounds/loop.mp3');
-  bgMusic.loop = true;
-  bgMusic.volume = 0.5;
+  let bgMusic = null;
+  if (typeof window !== 'undefined') {
+    bgMusic = new Audio('/sounds/loop.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.5;
+  }
 
   useEffect(() => {
     const saved = localStorage.getItem('highScore');
@@ -128,8 +131,11 @@ export default function Home() {
     setLastClickTime(now);
 
     // Play sound
-    const audio = new Audio('/sounds/coin.mp3');
-    audio.play();
+    let audio = null;
+    if (typeof window !== 'undefined') {
+      audio = new Audio('/sounds/coin.mp3');
+      audio.play();
+    }
 
     const coinEl = document.getElementById(`coin-${id}`);
     const container = document.getElementById('drop-zone');
